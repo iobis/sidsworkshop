@@ -87,11 +87,13 @@ var processProgramme = function(csv) {
 
 	}
 
+	var el = $("<table class=\"table\"><tbody></tbody></table>");
+	$("#programme").append(el);
+	var tbody = el.find("tbody");
+
 	for (d in o) {
 
-		var el = $("<h3>" + d + "</h3><table class=\"table\"><tbody></tbody></table>");
-		$("#programme").append(el);
-		var tbody = el.find("tbody");
+		tbody.append("<tr class=\"daterow\"><td colspan=\"4\"><h3>" + d + "</h3></td></tr>")
 
 		for (b in o[d]) {
 			var first = true;
@@ -112,10 +114,10 @@ var processProgramme = function(csv) {
 				if (first) {
 					tbody.append(
 						"<tr class=\"" + cl + "\">" +
-						"<td width=\"15%\" rowspan=\"" + o[d][b].items.length + "\" class=\"break " + cl2 + "\">" + o[d][b].items[p].place + "</td>" +
-						"<td width=\"15%\" class=\"" + cl2 + "\">" + o[d][b].items[p].time + "</td>" +
-						"<td width=\"40%\" class=\"" + cl2 + "\">" + o[d][b].items[p].title + "</td>" +
-						"<td width=\"30%\" class=\"" + cl2 + "\">" + o[d][b].items[p].name + "</td>" +
+						"<td rowspan=\"" + o[d][b].items.length + "\" class=\"break " + cl2 + "\">" + o[d][b].items[p].place + "</td>" +
+						"<td nowrap class=\"" + cl2 + "\">" + o[d][b].items[p].time + "</td>" +
+						"<td class=\"" + cl2 + "\">" + o[d][b].items[p].title + "</td>" +
+						"<td class=\"" + cl2 + "\">" + o[d][b].items[p].name + "</td>" +
 						"</tr>"
 					);
 					first = false;
@@ -154,18 +156,24 @@ var processParticipants = function(csv) {
 		}
 		o[group][country][name] = fun;
 	}
+
+	var el = $("<table class=\"table\"><tbody></tbody></table>");
+	$("#participants").append(el);
+	var tbody = el.find("tbody");
+
 	for (g in o) {
-		var el = $("<h3>" + g + "</h3><table class=\"table\"><tbody></tbody></table>");
-		$("#participants").append(el);
+
+		tbody.append("<tr class=\"daterow\"><td colspan=\"3\"><h3>" + g + "</h3></td></tr>")
+
 		for (c in o[g]) {
 			var rows = Object.keys(o[g][c]).length
 			var first = true;
 			for (n in o[g][c]) {
 				if (first) {
-					el.find("tbody").append("<tr><td rowspan=\"" + rows + "\" width=\"20%\">" + c + "</td><td width=\"30%\">" + n + "</td><td width=\"50%\">" + o[g][c][n] + "</td></tr>")
+					tbody.append("<tr><td rowspan=\"" + rows + "\">" + c + "</td><td>" + n + "</td><td>" + o[g][c][n] + "</td></tr>")
 					first = false;
 				} else {
-					el.find("tbody").append("<tr><td>" + n + "</td><td>" + o[g][c][n] + "</td></tr>")
+					tbody.append("<tr><td>" + n + "</td><td>" + o[g][c][n] + "</td></tr>")
 				}
 			}
 		}
