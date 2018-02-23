@@ -43,6 +43,11 @@ var processProgramme = function(csv) {
 		var speaker = data[i][4];
 		var name = data[i][5];
 		var link = data[i][6];
+
+		if (link != null && link != "") {
+			title = "<a href=\"" + link + "\" target=\"_blank\">" + title + "</a>";
+		}
+
 		var timeString = timeString = startHour + ":" + startMinutes;
 		if (endHour) {
 			timeString = timeString + " - " + endHour + ":" + endMinutes;
@@ -62,7 +67,7 @@ var processProgramme = function(csv) {
 		var item = {
 			time: timeString,
 			type: type,
-			place: place,
+			place: place.replace("/", "/&#8203;"),
 			title: title,
 			speaker: speaker,
 			name: name,
@@ -99,7 +104,7 @@ var processProgramme = function(csv) {
 			var first = true;
 			for (p in o[d][b].items) {
 
-				var cl = "";
+				var cl = "light";
 				if (o[d][b].type == "transport") {
 					cl = "pr-transport";
 				} else if (o[d][b].type == "break") {
@@ -114,8 +119,8 @@ var processProgramme = function(csv) {
 				if (first) {
 					tbody.append(
 						"<tr class=\"" + cl + "\">" +
-						"<td rowspan=\"" + o[d][b].items.length + "\" class=\"break " + cl2 + "\">" + o[d][b].items[p].place + "</td>" +
-						"<td nowrap class=\"" + cl2 + "\">" + o[d][b].items[p].time + "</td>" +
+						"<td rowspan=\"" + o[d][b].items.length + "\" class=\"" + cl2 + "\">" + o[d][b].items[p].place + "</td>" +
+						"<td class=\"timespan " + cl2 + "\">" + o[d][b].items[p].time + "</td>" +
 						"<td class=\"" + cl2 + "\">" + o[d][b].items[p].title + "</td>" +
 						"<td class=\"" + cl2 + "\">" + o[d][b].items[p].name + "</td>" +
 						"</tr>"
@@ -145,7 +150,7 @@ var processParticipants = function(csv) {
 		if (group == "") {
 			break;
 		}
-		var country = data[i][2];
+		var country = data[i][2].replace("UNESCO-Intergovernmental Oceanographic Commission", "UNESCO-IOC");
 		var name = data[i][3];
 		var fun = data[i][4];
 		if (!o.hasOwnProperty(group)) {
@@ -170,12 +175,18 @@ var processParticipants = function(csv) {
 			var first = true;
 			for (n in o[g][c]) {
 				if (first) {
-					tbody.append("<tr><td rowspan=\"" + rows + "\">" + c + "</td><td>" + n + "</td><td>" + o[g][c][n] + "</td></tr>")
+					tbody.append("<tr><td class=\"break light\" rowspan=\"" + rows + "\">" + c + "</td><td class=\"light\">" + n + "</td><td class=\"light\">" + o[g][c][n] + "</td></tr>")
 					first = false;
 				} else {
-					tbody.append("<tr><td>" + n + "</td><td>" + o[g][c][n] + "</td></tr>")
+					tbody.append("<tr><td class=\"light\">" + n + "</td><td class=\"light\">" + o[g][c][n] + "</td></tr>")
 				}
 			}
 		}
 	}
 };
+
+$(document).on('click','.navbar-collapse.in',function(e) {
+    if( $(e.target).is('a') ) {
+        $(this).collapse('hide');
+    }
+});

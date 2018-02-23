@@ -3,7 +3,7 @@ body {
     font-family: "PT Sans", sans-serif;
 }
 
-.business-header {
+.image-header {
     height: 300px;
     background-color: #0f1a1e;
     background: url('../images/bio.jpg') center center no-repeat scroll;
@@ -13,20 +13,17 @@ body {
     -o-background-size: cover;
 }
 
-.jumbotron {
-    background-color: transparent;
-    color: #ffffff;
-    padding-left: 0px !important;
-    padding-top: 90px;
+.image-header .container {
+    height: 100%;
 }
 
-.jumbotron h1 {
+.timespan {
+    white-space: nowrap;
+}
+
+h1 {
     font-size: 4em;
-    font-weight: normal;
-}
-
-.jumbotron span {
-    padding: 0px 10px 0px 10px;
+    color: #ffffff;
 }
 
 .img-center {
@@ -53,11 +50,13 @@ a.anchor {
 }
 
 .pr-break {
-    background-color: #eeeeee;
+    background-color: #157cf2 !important;
+    color: #ffffff;
 }
 
 .pr-transport {
-    background-color: #ffe9d1;
+    background-color: #1ba9f5 !important;
+    color: #ffffff;
 }
 
 .pr-moderator {
@@ -67,10 +66,6 @@ a.anchor {
 table {
     margin-top: 10px !important;
     margin-bottom: 40px !important;
-}
-
-td.break {
-    word-wrap: break-word;
 }
 
 .daterow td {
@@ -102,8 +97,17 @@ td.break {
 }
 
 @media only screen and (max-width: 600px) {
+    .timespan {
+        white-space: normal !important;
+    }
     #logos img {
         height: 40px;
+    }
+    h1 {
+        font-size: 2.5em;
+    }
+    td.break {
+        word-wrap: break-word;
     }
 }
 
@@ -133,6 +137,26 @@ td.break {
     max-width: 100%;
 }
 
-.business-header .container, .yellow .container {
+.yellow .container {
     position: relative;
 }
+
+.image-header .container {
+    position: relative;
+}
+
+#tagline {
+    position: absolute;
+    top: 50%;
+    margin-top: -60px;
+}
+
+iframe {
+    width: 320;
+    height: 195;
+}
+
+.light {
+    background-color: #eeeeee;
+}
+
